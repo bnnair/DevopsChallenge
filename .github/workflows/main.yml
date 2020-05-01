@@ -33,3 +33,12 @@ jobs:
     - run: |
         docker build . -t bnnair.azurecr.io/hostnameIdentifier:${{ github.sha }}
         docker push bnnair.azurecr.io/hostnameIdentifier:${{ github.sha }}
+        
+    - uses: azure/webapps-container-deploy@v1
+      with:
+        app-name: 'HostnameIdentifier'
+        images: 'bnnair.azurecr.io/hostnameIdentifier:${{ github.sha }}'
+    
+    - name: Azure logout
+      run: |
+        az logout
